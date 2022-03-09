@@ -24,13 +24,14 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-./catboost_info
-./application/node_modules
-./application/PDM app/venv
-./1st_test
-./2nd_test
-./4th_test
-./__results__files
+catboost_info
+application/node_modules
+application/PDM app/venv
+1st_test
+2nd_test
+4th_test
+__results__files
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
