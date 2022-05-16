@@ -4,7 +4,7 @@ const axios = require('axios');
 
 http.createServer(function(req,res) {
     res.writeHead(200,{'Content-Type': 'text/plain'});
-    console.log('Running to Zetta server')
+    console.log('Running Zetta server')
     let data = ''
     req.on('data', chunk => {
         data = JSON.parse(chunk)
@@ -26,5 +26,5 @@ http.createServer(function(req,res) {
         
         res.end('Data Received Successfully!!!');
       });
-    
+    // res.end('Connected to zetta')
 }).listen(3000);
