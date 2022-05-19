@@ -606,7 +606,7 @@
           label: _get_data.datasets[i].label,
           tension: _get_data.lineTension,
           backgroundColor: _get_data.datasets[i].background,
-          borderWidth: 2,
+          borderWidth: 5,
           borderColor: _get_data.datasets[i].color,
           pointBorderColor: "transparent",
           pointBackgroundColor: "transparent",
