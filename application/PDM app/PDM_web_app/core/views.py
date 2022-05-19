@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.conf import settings
+from django.db.models import Q
 import json
 import pandas as pd
-
+import datetime
 from .models import SensorOneData, SensorTwoData
 # Create your views here.
 @csrf_exempt
@@ -38,4 +39,13 @@ def home(request):
 
 
 def instantaneous_bearing_data(request):
-    return render(request, 'core/instantaneous_bearing_data.html')
+    date = datetime.datetime.now(datetime.timezone.utc)
+    context = {}
+    current_hour = date.hour
+    current_date = date.date()
+    print(current_date.day, current_hour, date)
+    sensor_one = SensorOneData.objects.filter(Q(created_at__hour=current_hour-2), Q(created_at__day=current_date.day)).values('x_axis','y_axis', 'created_at')
+    sensor_two = SensorTwoData.objects.filter(Q(created_at__hour=current_hour), Q(created_at=current_date)).values('x_axis','y_axis', 'created_at')
+    context['sensor_one'] = list(sensor_one)
+    context['sensor_two'] = list(sensor_two)
+    return render(request, 'core/instantaneous_bearing_data.html', context)

@@ -579,19 +579,26 @@
   NioApp.coms.docReady.push(function () {
     salesBarChart();
   });
+  const sensorOne = JSON.parse(document.getElementById('sensor_one').textContent);
+    let oneData = []
+    sensorOne.map((item)=>{
+      oneData.push(item.x_axis);
+    });
   var salesOverview = {
     labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"],
-    dataUnit: 'BTC',
+    dataUnit: 'Bitch',
     lineTension: 0.1,
     datasets: [{
       label: "Sales Overview",
       color: "#798bff",
       background: NioApp.hexRGB('#798bff', .3),
-      data: [8200, 7800, 9500, 5500, 9200, 9690, 8200, 7800, 9500, 5500, 9200, 9690, 8200, 7800, 9500, 5500, 9200, 9690, 8200, 7800, 9500, 5500, 9200, 9690, 8200, 7800, 9500, 5500, 9200, 9690]
+      data: oneData
     }]
   };
 
+
   function lineSalesOverview(selector, set_data) {
+console.log(salesOverview)
     var $selector = selector ? $(selector) : $('.sales-overview-chart');
     $selector.each(function () {
       var $self = $(this),
@@ -706,7 +713,7 @@
 
 
   NioApp.coms.docReady.push(function () {
-    lineSalesOverview();
+    // lineSalesOverview();
   });
   var supportStatus = {
     labels: ["Bitcoin", "Ethereum", "NioCoin", "Feature Request", "Bug Fix"],
