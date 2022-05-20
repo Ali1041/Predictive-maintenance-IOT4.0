@@ -20,11 +20,27 @@
                                     <h6 class="overline-title text-primary-alt">Dashboards</h6>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="html/index.html" class="nk-menu-link">
+                                    <a href="{% url 'core:main-dashboard' %}" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
-                                        <span class="nk-menu-text">Machihne Status Dashboard</span>
+                                        <span class="nk-menu-text">Main Dashboard</span>
+
                                     </a>
-                                </li><!-- .nk-menu-item -->
+                                </li>
+	                            <li class="nk-menu-item">
+                                    <a href="{% url 'core:bearing-history' %} " class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
+                                        <span class="nk-menu-text">Technical Details</span>
+
+                                    </a>
+                                </li>
+	                            <li class="nk-menu-item">
+                                    <a href="{% url 'core:time-features' %} " class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
+                                        <span class="nk-menu-text">Time Features</span>
+
+                                    </a>
+                                </li>
+	                            <!-- .nk-menu-item -->
                             </ul><!-- .nk-menu -->
                         </div><!-- .nk-sidebar-menu -->
                     </div><!-- .nk-sidebar-content -->

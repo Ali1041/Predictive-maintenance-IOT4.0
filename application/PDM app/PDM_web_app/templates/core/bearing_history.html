@@ -1,0 +1,205 @@
+{% extends 'core/base.html' %}
+{% block content %}
+	<div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+
+
+                                <!-- Headings -->
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">Dashboard Overview</h3>
+                                            <div class="nk-block-des text-soft">
+                                                <p>Welcome to PDM Dashboard.</p>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content">
+                                            <div class="toggle-wrap nk-block-tools-toggle">
+                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                <div class="toggle-expand-content" data-content="pageMenu">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li>
+                                                            <div class="dropdown">
+                                                                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-calender-date"></em><span><span class="d-none d-md-inline">Last</span> 30 Days</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>Last 30 Days</span></a></li>
+                                                                        <li><a href="#"><span>Last 6 Months</span></a></li>
+                                                                        <li><a href="#"><span>Last 1 Years</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="nk-block-tools-opt"><a href="#" class="btn btn-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+
+
+                                <div class="nk-block">
+
+
+                                    <!-- Time Waveform -->
+                                    <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+            <div class="card-title-group align-start gx-3 mb-3">
+                <div class="card-title">
+                    <h6 class="title">Real Time Vibration Data</h6>
+                </div>
+
+            </div>
+            <div class="nk-sale-data-group align-center justify-between gy-3 gx-5">
+
+            </div>
+            <div class="nk-sales-ck large pt-4">
+                <canvas class="sales-overview-chart-1" id="salesOverview"></canvas>
+            </div>
+        </div>
+
+
+                                                <!-- Time Features -->
+                                                <div class="card-inner" style="padding: 0 1.5rem 0.75rem 1.5rem;">
+                                                    <hr style="margin-top:0"/>
+                                                    <div class="nk-sales-data-group align-center justify-between" style="margin-left: 1rem !important; margin-right: 1rem !important; ">
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Mean:</span>
+                                                            <span class="amount">{{ feature.mean|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Std:</span>
+                                                            <span class="amount">{{ feature.std|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Skewness:</span>
+                                                            <span class="amount">{{ feature.skewness|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Kurtosis:</span>
+                                                            <span class="amount">{{ feature.kurtosis|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Clearance:</span>
+                                                            <span class="amount">{{ feature.clearance|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Impulse:</span>
+                                                            <span class="amount">{{ feature.impulse|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Shape:</span>
+                                                            <span class="amount">{{ feature.shape|floatformat:3 }}</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">Crest:</span>
+                                                            <span class="amount">{{ feature.crest|floatformat:3 }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+
+                                    <!-- FFT -->
+                                    <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Sales Overview</h6>
+                                                            <p>In 30 days sales of product subscription. <a href="#">See Details</a></p>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-primary btn-dim d-none d-sm-inline-flex" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em><span><span class="d-none d-md-inline">Download</span> Report</span></a>
+                                                                <a href="#" class="btn btn-icon btn-primary btn-dim d-sm-none" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>Download Mini Version</span></a></li>
+                                                                        <li><a href="#"><span>Download Full Version</span></a></li>
+                                                                        <li class="divider"></li>
+                                                                        <li><a href="#"><em class="icon ni ni-opt-alt"></em><span>More Options</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sale-data-group align-center justify-between gy-3 gx-5">
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount">$82,944.60</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">1,937 <small>Subscribers</small></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <!-- <canvas class="sales-overview-chart" id="salesOverview"></canvas> -->
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+
+                                    <!-- Envelope Spectrum -->
+                                    <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Sales Overview</h6>
+                                                            <p>In 30 days sales of product subscription. <a href="#">See Details</a></p>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-primary btn-dim d-none d-sm-inline-flex" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em><span><span class="d-none d-md-inline">Download</span> Report</span></a>
+                                                                <a href="#" class="btn btn-icon btn-primary btn-dim d-sm-none" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>Download Mini Version</span></a></li>
+                                                                        <li><a href="#"><span>Download Full Version</span></a></li>
+                                                                        <li class="divider"></li>
+                                                                        <li><a href="#"><em class="icon ni ni-opt-alt"></em><span>More Options</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sale-data-group align-center justify-between gy-3 gx-5">
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount">$82,944.60</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm">1,937 <small>Subscribers</small></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart-2" id="salesOverview"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+
+                                </div><!-- .nk-block -->
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	{{ sensor_one|json_script:'sensor_one' }}
+	{{ sensor_two|json_script:'sensor_two' }}
+	{{ x_axis|json_script:'fft_x_axis' }}
+	{{ y_axis|json_script:'fft_y_axis' }}
+{% endblock %}

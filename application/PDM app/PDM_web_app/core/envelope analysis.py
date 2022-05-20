@@ -18,16 +18,13 @@ plt.rcParams.update({'font.size': 10})
 def get_fft(time, inp):
     dt = (time[1]-time[0])
     n = int(1/dt)
-    print(n)
     fhat = abs(np.fft.fft(inp,n))/n
     freq = (1/(dt*n))* np.arange(n)
     L = np.arange(1, np.floor(n/2), dtype='int')
 
-    plt.plot(freq[L], fhat[L], color='c', LineWidth=2)
 #     plt.xlim(freq[L[0]], f_lim)
 #     plt.legend()
 
-    plt.show()
     return (freq[L], fhat[L])
 
 
