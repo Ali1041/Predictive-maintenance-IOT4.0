@@ -13354,11 +13354,11 @@ p > span > .icon.ni { vertical-align: middle; }
 
 .nk-sale-data-group { display: flex; flex-wrap: wrap; }
 
-.nk-sale-data .amount { display: block; font-size: 1.75rem; color: #364a63; }
+.nk-sale-data .amount { display: block; font-size: 1.1rem; color: #364a63; }
 
 .nk-sale-data .amount .change { font-size: .875rem; }
 
-.nk-sale-data .amount.sm { font-size: 1.125rem; color: #8094ae; }
+.nk-sale-data .amount.sm { font-size: .8rem; color: #8094ae; }
 
 .nk-sale-data .sub-title { color: #8094ae; font-size: 12px; }
 
@@ -13366,7 +13366,7 @@ p > span > .icon.ni { vertical-align: middle; }
 
 .nk-sales-ck { height: 80px; flex-grow: 1; }
 
-.nk-sales-ck.large { height: 200px; }
+.nk-sales-ck.large { height: 400px; }
 
 @media (min-width: 992px) and (max-width: 1539.98px) { .nk-sales-ck.sales-revenue { height: 164px; } }
 

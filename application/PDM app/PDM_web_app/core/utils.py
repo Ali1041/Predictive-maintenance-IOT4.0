@@ -3,24 +3,23 @@ from .models import SensorOneData,SensorTwoData,FeaturesObtained
 from django.db.models import Q
 import numpy as np
 from scipy.stats import skew, kurtosis
+from scipy import signal
+from scipy.fft import fft, fftfreq
 
-def fetch_data():
-    date = datetime.datetime.now(datetime.timezone.utc)
-    current_hour = date.hour
-    current_date = date.date()
-    sensor_one = SensorOneData.objects.filter(Q(created_at__hour=18),
-                                              Q(created_at__day=current_date.day)).values('x_axis', 'y_axis',
+
+
+
+def fetch_data(previous_pk, latest_pk):
+
+    sensor_one = SensorOneData.objects.filter(Q(id__gte=previous_pk),Q(id__lte=latest_pk)).values('x_axis', 'y_axis',
                                                                                           'created_at')
-    sensor_two = SensorTwoData.objects.filter(Q(created_at__hour=current_hour), Q(created_at__day=current_date.day)).values(
+    sensor_two = SensorTwoData.objects.filter(Q(id__gte=previous_pk),Q(id__lte=latest_pk)).values(
         'x_axis', 'y_axis', 'created_at')
     return sensor_one, sensor_two
 
-def get_features(sensor_name, axis):
-    date = datetime.datetime.now(datetime.timezone.utc)
-    current_hour = date.hour
-    current_date = date.date()
-    features = FeaturesObtained.objects.filter(Q(created_at__hour=18),
-                                              Q(created_at__day=current_date.day), name__iexact=sensor_name, axis=axis).values(
+def get_features( previous_pk, latest_pk):
+    features = FeaturesObtained.objects.filter(Q(id__gte=previous_pk),
+                                              Q(id__lte=latest_pk)).values(
         'mean',
         'std',
         'crest',
@@ -30,7 +29,7 @@ def get_features(sensor_name, axis):
         'impulse',
         'shape',
     )
-    return features[0]
+    return features
 
 def get_fft(inp):
     fft_time = np.arange(0,1, 1/len(inp))
@@ -46,6 +45,23 @@ def get_fft(inp):
     return (freq[L], fhat[L])
 
 
+def get_envelope(data):
+    sos = signal.butter(5, [2000, 6000], 'bandpass', fs=20000, output='sos')
+
+    filtered = signal.sosfilt(sos, data)
+    y = signal.hilbert(filtered)
+
+    # y = signal.hilbert(x)
+    env = ((y.real) ** 2 + (y.imag) ** 2) ** 0.5
+    N = 20480
+    SAMPLE_RATE = 20000
+
+    yf = fft(env)
+    y_axis = abs(yf)[:int(len(data) / 2)]
+    xf = fftfreq(N, 1 / SAMPLE_RATE)
+    # x_val = [int(item) for index, item in enumerate(xf) if index != 0]
+    y_val = [abs(item) for index, item in enumerate(y_axis) if index != 0]
+    return y_val
 
 def calculate_clearence(df):
     result = ((np.sqrt(abs(df))).sum() / len(df)) ** 2

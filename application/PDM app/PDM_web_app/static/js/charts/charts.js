@@ -1,247 +1,135 @@
-"use strict";
 
-!function (NioApp, $){
-
-    const sensorOne = JSON.parse(document.getElementById('sensor_one').textContent);
-    let oneData = []
-    let labels = []
-  console.log(sensorOne)
-    sensorOne.map((item, index) => {
-        // if (index === 21000){ break;}
-        oneData.push(item.x_axis);
-        labels.push(index);
-    });
-    var salesOverview = {
-        labels: labels,
-        dataUnit: 'Bitch',
-        lineTension: 0.1,
-        datasets: [{
-            label: "Sales Overview",
-            color: "#798bff",
-            background: NioApp.hexRGB('#798bff', .3),
-            data: oneData
-        }]
-    }
-
-  function lineVibration(selector, set_data) {
-    var $selector = selector ? $(selector) : $('.sales-overview-chart-1');
-    $selector.each(function () {
-      var $self = $(this),
-          _self_id = $self.attr('id'),
-          _get_data = typeof set_data === 'undefined' ? eval(_self_id) : set_data;
-
-      var selectCanvas = document.getElementById(_self_id).getContext("2d");
-      var chart_data = [];
-
-      for (var i = 0; i < _get_data.datasets.length; i++) {
-        chart_data.push({
-          label: _get_data.datasets[i].label,
-          tension: _get_data.lineTension,
-          backgroundColor: _get_data.datasets[i].background,
-          borderWidth: 2,
-          borderColor: _get_data.datasets[i].color,
-          pointBorderColor: "transparent",
-          pointBackgroundColor: "transparent",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: _get_data.datasets[i].color,
-          pointBorderWidth: 2,
-          pointHoverRadius: 3,
-          pointHoverBorderWidth: 2,
-          pointRadius: 3,
-          pointHitRadius: 3,
-          data: _get_data.datasets[i].data
-        });
-      }
-
-      var chart = new Chart(selectCanvas, {
-        type: 'line',
-        data: {
-          labels: _get_data.labels,
-          datasets: chart_data
-        },
-        options: {
-          legend: {
-            display: false,
-            labels: {
-              boxWidth: 30,
-              padding: 20,
-              fontColor: '#6783b8'
-            }
-          },
-          maintainAspectRatio: false,
-           tooltips: {enabled: false},
-        hover: {mode: null},
-          scales: {
-            yAxes: [{
-              display: true,
-              stacked: _get_data.stacked ? _get_data.stacked : false,
-              position: NioApp.State.isRTL ? "right" : "left",
-              ticks: {
-                beginAtZero: true,
-                fontSize: 11,
-                fontColor: '#9eaecf',
-                padding: 10,
-                callback: function callback(value, index, values) {
-                  return value;
-                },
-                stepSize:0.0001
-              },
-              gridLines: {
-                color: NioApp.hexRGB("#526484", .2),
-                tickMarkLength: 0,
-                zeroLineColor: NioApp.hexRGB("#526484", .2)
-              }
-            }],
-            xAxes: [{
-              display: false,
-              stacked: _get_data.stacked ? _get_data.stacked : false,
-              ticks: {
-                fontSize: 9,
-                fontColor: '#9eaecf',
-                source: 'auto',
-                padding: 10,
-                reverse: NioApp.State.isRTL
-              },
-              gridLines: {
-                color: "transparent",
-                tickMarkLength: 0,
-                zeroLineColor: 'transparent'
-              }
-            }]
-          },
-
-        }
-      });
-    });
-  } // init chart
-
-
-  NioApp.coms.docReady.push(function () {
-    lineVibration();
+  const sensorOne = JSON.parse(document.getElementById('sensor_one').textContent);
+  const sensorTwo = JSON.parse(document.getElementById('sensor_two').textContent);
+  let oneDataX = []
+  let oneDataY = []
+  let labels = []
+  let twoDataX = []
+  let twoDataY = []
+  sensorOne.map((item, index) => {
+      // if (index === 21000){ break;}
+      oneDataX.push(item.x_axis);
+      oneDataY.push(item.y_axis);
+      twoDataX.push(sensorTwo[index].x_axis);
+      twoDataY.push(sensorTwo[index].x_axis);
+      labels.push(index);
   });
-
-
-
-
-
-    const fftXaxis = JSON.parse(document.getElementById('fft_x_axis').textContent);
-    const fftYaxis = JSON.parse(document.getElementById('fft_y_axis').textContent);
-    let dataFFT = []
-    let labelsFFT = []
-  console.log(fftXaxis, fftYaxis)
-    sensorOne.map((item, index) => {
-        // if (index === 21000){ break;}
-        dataFFT.push(item.x_axis);
-        labelsFFT.push(fftYaxis[index]);
-    });
-    var fftOverview = {
-        labels: labels,
-        dataUnit: 'Bitch',
-        lineTension: 0.1,
-        datasets: [{
-            label: "Sales Overview",
-            color: "#798bff",
-            background: NioApp.hexRGB('#798bff', .3),
-            data: oneData
-        }]
-    }
-
-  function lineFFT(selector, set_data) {
-    var $selector = selector ? $(selector) : $('.sales-overview-chart-2');
-    $selector.each(function () {
-      var $self = $(this),
-          _self_id = $self.attr('id'),
-          _get_data = typeof set_data === 'undefined' ? eval(_self_id) : set_data;
-
-      var selectCanvas = document.getElementById(_self_id).getContext("2d");
-      var chart_data = [];
-
-      for (var i = 0; i < _get_data.datasets.length; i++) {
-        chart_data.push({
-          label: _get_data.datasets[i].label,
-          tension: _get_data.lineTension,
-          backgroundColor: _get_data.datasets[i].background,
-          borderWidth: 2,
-          borderColor: _get_data.datasets[i].color,
-          pointBorderColor: "transparent",
-          pointBackgroundColor: "transparent",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: _get_data.datasets[i].color,
-          pointBorderWidth: 2,
-          pointHoverRadius: 3,
-          pointHoverBorderWidth: 2,
-          pointRadius: 3,
-          pointHitRadius: 3,
-          data: _get_data.datasets[i].data
-        });
-      }
-
-      var chart = new Chart(selectCanvas, {
-        type: 'line',
-        data: {
-          labels: _get_data.labels,
-          datasets: chart_data
-        },
-        options: {
-          legend: {
-            display: false,
-            labels: {
-              boxWidth: 30,
-              padding: 20,
-              fontColor: '#6783b8'
-            }
-          },
-          maintainAspectRatio: false,
-           tooltips: {enabled: false},
-        hover: {mode: null},
-          scales: {
-            yAxes: [{
-              display: true,
-              stacked: _get_data.stacked ? _get_data.stacked : false,
-              position: NioApp.State.isRTL ? "right" : "left",
-              ticks: {
-                beginAtZero: true,
-                fontSize: 11,
-                fontColor: '#9eaecf',
-                padding: 10,
-                callback: function callback(value, index, values) {
-                  return value;
+  let selectCanvas = document.getElementById('vibrationChartOneX').getContext('2d')
+  new Chart(selectCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data:oneDataX,
+                    backgroundColor:'white',
+                    fill:true,
+                    borderColor:'rgb(173,216,230)',
+                    borderWidth:1
+                }]
+            },
+            options: {
+                elements: {
+                    point:{
+                        radius: 0
+                    }
                 },
-                stepSize:0.0001
-              },
-              gridLines: {
-                color: NioApp.hexRGB("#526484", .2),
-                tickMarkLength: 0,
-                zeroLineColor: NioApp.hexRGB("#526484", .2)
-              }
-            }],
-            xAxes: [{
-              display: false,
-              stacked: _get_data.stacked ? _get_data.stacked : false,
-              ticks: {
-                fontSize: 9,
-                fontColor: '#9eaecf',
-                source: 'auto',
-                padding: 10,
-                reverse: NioApp.State.isRTL
-              },
-              gridLines: {
-                color: "transparent",
-                tickMarkLength: 0,
-                zeroLineColor: 'transparent'
-              }
-            }]
-          },
+                tooltips: {enabled: false},
+                hover: {mode: null},
+                scales: {
+                    x: {
+                        display:false
+                    }
+                }
+            },
 
-        }
-      });
-    });
-  } // init chart
+        });
 
+  selectCanvas = document.getElementById('vibrationChartOneY').getContext('2d')
+  new Chart(selectCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data:oneDataY,
+                    backgroundColor:'white',
+                    fill:true,
+                    borderColor:'rgb(173,216,230)',
+                    borderWidth:1
+                }]
+            },
+            options: {
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                tooltips: {enabled: false},
+                hover: {mode: null},
+                scales: {
+                    x: {
+                        display:false
+                    }
+                }
+            },
 
-  NioApp.coms.docReady.push(function () {
-    lineFFT();
-  });
+        });
 
+  selectCanvas = document.getElementById('vibrationChartTwoX').getContext('2d')
+   new Chart(selectCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data:twoDataX,
+                    backgroundColor:'white',
+                    fill:true,
+                    borderColor:'rgb(173,216,230)',
+                    borderWidth:1
+                }]
+            },
+            options: {
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                tooltips: {enabled: false},
+                hover: {mode: null},
+                scales: {
+                    x: {
+                        display:false
+                    }
+                }
+            },
 
-} (NioApp, jQuery);
+        });
+
+  selectCanvas = document.getElementById('vibrationChartTwoY').getContext('2d')
+  new Chart(selectCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data:twoDataY,
+                    backgroundColor:'white',
+                    fill:true,
+                    borderColor:'rgb(173,216,230)',
+                    borderWidth:1
+                }]
+            },
+            options: {
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                tooltips: {enabled: false},
+                hover: {mode: null},
+                scales: {
+                    x: {
+                        display:false
+                    }
+                }
+            },
+
+        });
