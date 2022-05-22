@@ -37,16 +37,17 @@ fetch('http://127.0.0.1:8000/fft-api/')
         twoFFTY.push(data.y_2_y_val[index]);
     });
     let selectCanvas = document.getElementById('fftOverview-1').getContext('2d');
-    new Chart(selectCanvas, {
+    let chart = new Chart(selectCanvas, {
             type: 'line',
             data: {
                 labels: labelsFFT,
                 datasets: [{
+                    label:'',
                     data:oneFFTX,
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
-                    borderWidth:1
+                    borderWidth:1,
                 }]
             },
             options: {
@@ -55,8 +56,6 @@ fetch('http://127.0.0.1:8000/fft-api/')
                         radius: 0
                     }
                 },
-                tooltips: {enabled: false},
-                hover: {mode: null},
                 scales: {
                     y: {
                         max:1
@@ -83,7 +82,8 @@ fetch('http://127.0.0.1:8000/fft-api/')
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
-                    borderWidth:1
+                    borderWidth:1,
+                    label:'',
                 }]
             },
             options: {
@@ -117,6 +117,7 @@ fetch('http://127.0.0.1:8000/fft-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:twoFFTX,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -154,6 +155,7 @@ fetch('http://127.0.0.1:8000/fft-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:twoFFTY,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -212,6 +214,7 @@ fetch('http://127.0.0.1:8000/envelope-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:oneX,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -237,6 +240,7 @@ fetch('http://127.0.0.1:8000/envelope-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:oneY,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -262,6 +266,7 @@ fetch('http://127.0.0.1:8000/envelope-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:twoX,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -287,6 +292,7 @@ fetch('http://127.0.0.1:8000/envelope-api/')
                 labels: labelsFFT,
                 datasets: [{
                     data:twoY,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',

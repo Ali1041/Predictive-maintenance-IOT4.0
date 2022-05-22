@@ -6,12 +6,11 @@ import json
 import pandas as pd
 import numpy as np
 from scipy.fft import fft, fftfreq
-import datetime
-from scipy import signal
-
+import os
 from .models import SensorOneData, SensorTwoData, FeaturesObtained
 from .utils import fetch_data, make_features, get_features, get_fft, get_envelope
-
+import pickle
+from sklearn.preprocessing import StandardScaler
 
 # Create your views here.
 
@@ -59,6 +58,26 @@ def load_data(request):
     SensorOneData.objects.bulk_create(sensor_one)
     SensorTwoData.objects.bulk_create(sensor_two)
     request.session['current_pk'] = SensorOneData.objects.latest('pk').pk
+
+    directory_path = settings.STATIC_ROOT+'/bleh'
+    for file in os.listdir(directory_path):
+        file_data = pd.read_csv(os.path.join(directory_path, file), sep='\t')
+        file_data.columns = ['B1x', 'B1y', 'B2x', 'B2y']
+        sensor_one_x = list(dataset['B1x'])
+        sensor_one_y = list(dataset['B1y'])
+        sensor_two_x = list(dataset['B2x'])
+        sensor_two_y = list(dataset['B2y'])
+        sensor_one_x_array = np.array(sensor_one_x)
+        make_features(sensor_one_x_array, 'S1B1', 'x')
+
+        sensor_one_y_array = np.array(sensor_one_y)
+        make_features(sensor_one_y_array, 'S1B2', 'y')
+
+        sensor_two_x_array = np.array(sensor_two_x)
+        make_features(sensor_two_x_array, 'S2B1', 'x')
+
+        sensor_two_y_array = np.array(sensor_two_y)
+        make_features(sensor_two_y_array, 'S2B2', 'y')
     return render(request, 'core/index.html')
 
 
@@ -124,8 +143,6 @@ def envelope_spectrum(request):
 
 
 def bearing_history(request):
-    if request.method == 'POST':
-        pass
     context = {}
     latest_pk = request.session['current_pk']
     previous_pk = request.session['previous_pk']
@@ -141,19 +158,28 @@ def bearing_history(request):
 
 def time_features(request):
     context = {}
-    latest_pk = request.session['current_pk']
-    previous_pk = request.session['previous_pk']
-    sensor_one, sensor_two = fetch_data(previous_pk, latest_pk)
-    context['sensor_one'] = list(sensor_one)
-    context['sensor_two'] = list(sensor_two)
+    features_x = FeaturesObtained.objects.filter(axis='x').values().order_by('pk')
+    features_y = FeaturesObtained.objects.filter(axis='y').values()
+    context['features_x'] = list(features_x)
+    context['features_y'] = list(features_y)
     return render(request, 'core/time_features.html', context)
 
 
 def main_dashboard(request):
     context = {}
+    prediction_val = {
+        0:'Healthy',
+        1:'Faulty',
+    }
     latest_pk = request.session['current_pk']
     previous_pk = request.session['previous_pk']
     sensor_one, sensor_two = fetch_data(previous_pk, latest_pk)
+    feature = FeaturesObtained.objects.latest('-pk')
+    feature_list = [feature.mean, feature.std, feature.skewness, feature.kurtosis,feature.crest,feature.clearance,feature.shape,feature.impulse]
+    loaded_model = pickle.load(
+        open("C:\\Users\\DELL\\Documents\\All projects\FYP\\application\\PDM app\\PDM_web_app\\core\\logistic.pkl", 'rb'))
+    prediction = loaded_model.predict([feature_list])
     context['sensor_one'] = list(sensor_one)
     context['sensor_two'] = list(sensor_two)
+    context['result'] = prediction_val[prediction[0]]
     return render(request, 'core/main_dashboard.html', context)

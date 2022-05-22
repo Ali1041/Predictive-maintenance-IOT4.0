@@ -24,17 +24,19 @@
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
-                    borderWidth:1
+                    borderWidth:1,
+                    label:'',
                 }]
             },
             options: {
+                legend:{
+                    display:false
+                },
                 elements: {
                     point:{
                         radius: 0
                     }
                 },
-                tooltips: {enabled: false},
-                hover: {mode: null},
                 scales: {
                     x: {
                         display:false
@@ -51,6 +53,7 @@
                 labels: labels,
                 datasets: [{
                     data:oneDataY,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -81,6 +84,7 @@
                 labels: labels,
                 datasets: [{
                     data:twoDataX,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',
@@ -111,6 +115,7 @@
                 labels: labels,
                 datasets: [{
                     data:twoDataY,
+                    label:'',
                     backgroundColor:'white',
                     fill:true,
                     borderColor:'rgb(173,216,230)',

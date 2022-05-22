@@ -20,14 +20,22 @@
                                     <h6 class="overline-title text-primary-alt">Dashboards</h6>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="{% url 'core:main-dashboard' %}" class="nk-menu-link">
+                                    <a href="{% url 'core:main-dashboard' %}" {% if 'main-dashboard' in request.path %}
+	                                   {% else %}
+	                                class="nk-menu-link"
+                                    {% endif %}
+                                       >
                                         <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
                                         <span class="nk-menu-text">Main Dashboard</span>
 
                                     </a>
                                 </li>
 	                            <li class="nk-menu-item">
-                                    <a href="{% url 'core:bearing-history' %} " class="nk-menu-link">
+                                    <a href="{% url 'core:bearing-history' %} " {% if 'bearing-history' in request.path %}
+                                       class="nk-menu-link active"
+	                                   {% else %}
+	                                class="nk-menu-link"
+                                    {% endif %} >
                                         <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
                                         <span class="nk-menu-text">Technical Details</span>
 

@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
 	<div class="nk-content ">
                     <div class="container-fluid">
@@ -59,8 +60,13 @@
                                                         <div class="card-inner">
                                                             <div class="card-title-group align-start mb-2">
                                                                 <div class="card-title">
-                                                                    <h6 class="title">Mean Graph</h6>
-                                                                    <p>Last 30 days readings.</p>
+                                                                    <h6 class="title">Machine Learning Model</h6>
+	                                                                {% if result == 'Faulty' %}
+                                                                    <p class="text-danger">{{ result }}.</p>
+
+	                                                                {% else %}
+	                                                                <p class="text-success">{{ result }}</p>
+	                                                                {% endif %}
                                                                 </div>
                                                                 <div class="card-tools">
                                                                     <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Revenue from subscription"></em>
@@ -129,4 +135,7 @@
                 </div>
 {{ sensor_one|json_script:'sensor_one' }}
 {{ sensor_two|json_script:'sensor_two' }}
+{% endblock %}
+{% block script %}
+<script src="{% static './js/main.js' %}"></script>
 {% endblock %}

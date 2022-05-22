@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
 	<div class="nk-content ">
                     <div class="container-fluid">
@@ -201,4 +202,7 @@
 	{{ sensor_two|json_script:'sensor_two' }}
 
 
+{% endblock %}
+{% block script %}
+<script src="{% static './js/api-calls.js' %}"></script>
 {% endblock %}

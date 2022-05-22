@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
 	<div class="nk-content ">
                     <div class="container-fluid">
@@ -15,28 +16,6 @@
                                                 <p>Welcome to PDM Dashboard.</p>
                                             </div>
                                         </div><!-- .nk-block-head-content -->
-                                        <div class="nk-block-head-content">
-                                            <div class="toggle-wrap nk-block-tools-toggle">
-                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
-                                                <div class="toggle-expand-content" data-content="pageMenu">
-                                                    <ul class="nk-block-tools g-3">
-                                                        <li>
-                                                            <div class="dropdown">
-                                                                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-calender-date"></em><span><span class="d-none d-md-inline">Last</span> 30 Days</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    <ul class="link-list-opt no-bdr">
-                                                                        <li><a href="#"><span>Last 30 Days</span></a></li>
-                                                                        <li><a href="#"><span>Last 6 Months</span></a></li>
-                                                                        <li><a href="#"><span>Last 1 Years</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="nk-block-tools-opt"><a href="#" class="btn btn-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div><!-- .nk-block-head-content -->
                                     </div><!-- .nk-block-between -->
                                 </div><!-- .nk-block-head -->
 
@@ -51,27 +30,137 @@
                                                 <div class="card-inner">
                                                     <div class="card-title-group align-start gx-3 mb-3">
                                                         <div class="card-title">
-                                                            <h6 class="title">Sales Overview</h6>
-                                                            <p>In 30 days sales of product subscription. <a href="#">See Details</a></p>
-                                                        </div>
-                                                        <div class="card-tools">
-                                                            <div class="dropdown">
-                                                                <a href="#" class="btn btn-primary btn-dim d-none d-sm-inline-flex" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em><span><span class="d-none d-md-inline">Download</span> Report</span></a>
-                                                                <a href="#" class="btn btn-icon btn-primary btn-dim d-sm-none" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em></a>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    <ul class="link-list-opt no-bdr">
-                                                                        <li><a href="#"><span>Download Mini Version</span></a></li>
-                                                                        <li><a href="#"><span>Download Full Version</span></a></li>
-                                                                        <li class="divider"></li>
-                                                                        <li><a href="#"><em class="icon ni ni-opt-alt"></em><span>More Options</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
+                                                            <h6 class="title">Mean</h6>
                                                         </div>
                                                     </div>
 
                                                     <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="salesOverview"></canvas>
+                                                        <canvas class="sales-overview-chart" id="mean"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Crest</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="crest"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Standard Deviation</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="std"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Clearance</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="clear"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Kurtosis</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="kur"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Skewness</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="skew"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Impulse</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="impulse"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+	                                <div class="row g-gs">
+                                         <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Shape</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="shape"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -87,6 +176,10 @@
                         </div>
                     </div>
                 </div>
-		{{ sensor_one|json_script:'sensor_one' }}
-	{{ sensor_two|json_script:'sensor_two' }}
+	{{ features_x|json_script:'features_x' }}
+	{{ features_y|json_script:'features_y' }}
+{% endblock %}
+{% block script %}
+	<script src="{% static './js/time_features.js' %}"></script>
+
 {% endblock %}
