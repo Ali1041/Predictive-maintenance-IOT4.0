@@ -60,24 +60,27 @@ def load_data(request):
     request.session['current_pk'] = SensorOneData.objects.latest('pk').pk
 
     directory_path = settings.STATIC_ROOT+'/bleh'
+    c= 0
     for file in os.listdir(directory_path):
+        c+=1
         file_data = pd.read_csv(os.path.join(directory_path, file), sep='\t')
         file_data.columns = ['B1x', 'B1y', 'B2x', 'B2y']
-        sensor_one_x = list(dataset['B1x'])
-        sensor_one_y = list(dataset['B1y'])
-        sensor_two_x = list(dataset['B2x'])
-        sensor_two_y = list(dataset['B2y'])
-        sensor_one_x_array = np.array(sensor_one_x)
-        make_features(sensor_one_x_array, 'S1B1', 'x')
+        B1x = list(file_data['B1x'])
+        B1y = list(file_data['B1y'])
+        B2x = list(file_data['B2x'])
+        B2y = list(file_data['B2y'])
+        B1x_array = np.array(B1x)
+        make_features(B1x_array, 'S1B1', 'x')
 
-        sensor_one_y_array = np.array(sensor_one_y)
-        make_features(sensor_one_y_array, 'S1B2', 'y')
+        B1y_array = np.array(B1y)
+        make_features(B1y_array, 'S1B2', 'y')
 
-        sensor_two_x_array = np.array(sensor_two_x)
-        make_features(sensor_two_x_array, 'S2B1', 'x')
+        B2x_array = np.array(B2x)
+        make_features(B2x_array, 'S2B1', 'x')
 
-        sensor_two_y_array = np.array(sensor_two_y)
-        make_features(sensor_two_y_array, 'S2B2', 'y')
+        B2y_array = np.array(B2y)
+        make_features(B2y_array, 'S2B2', 'y')
+    print(c)
     return render(request, 'core/index.html')
 
 
@@ -158,10 +161,14 @@ def bearing_history(request):
 
 def time_features(request):
     context = {}
-    features_x = FeaturesObtained.objects.filter(axis='x').values().order_by('pk')
-    features_y = FeaturesObtained.objects.filter(axis='y').values()
-    context['features_x'] = list(features_x)
-    context['features_y'] = list(features_y)
+    features_one_x = FeaturesObtained.objects.filter(axis='x', name='S1B1').values().order_by('pk')
+    features_one_y = FeaturesObtained.objects.filter(axis='y', name='S1B2').values().order_by('pk')
+    features_two_x = FeaturesObtained.objects.filter(axis='x', name='S2B1').values().order_by('pk')
+    features_two_y = FeaturesObtained.objects.filter(axis='y', name='S2B2').values().order_by('pk')
+    context['features_one_x'] = list(features_one_x)
+    context['features_one_y'] = list(features_one_y)
+    context['features_two_x'] = list(features_two_x)
+    context['features_two_y'] = list(features_two_y)
     return render(request, 'core/time_features.html', context)
 
 
@@ -174,7 +181,7 @@ def main_dashboard(request):
     latest_pk = request.session['current_pk']
     previous_pk = request.session['previous_pk']
     sensor_one, sensor_two = fetch_data(previous_pk, latest_pk)
-    feature = FeaturesObtained.objects.latest('-pk')
+    feature = FeaturesObtained.objects.latest('pk')
     feature_list = [feature.mean, feature.std, feature.skewness, feature.kurtosis,feature.crest,feature.clearance,feature.shape,feature.impulse]
     loaded_model = pickle.load(
         open("C:\\Users\\DELL\\Documents\\All projects\FYP\\application\\PDM app\\PDM_web_app\\core\\logistic.pkl", 'rb'))

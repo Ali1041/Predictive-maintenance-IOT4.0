@@ -15,7 +15,17 @@
                                             <div class="nk-block-des text-soft">
                                                 <p>Welcome to PDM Dashboard.</p>
                                             </div>
+
                                         </div><!-- .nk-block-head-content -->
+	                                    <div class="text-center" id="controls">
+		                                        <label for="type" class="">Select Sensor and Axis</label>
+		                                        <select name="axis" id="type" class="form-control" onchange="applyFeatureFilter(event)">
+			                                        <option value="0">Sensor One, X-Axis</option>
+			                                        <option value="1">Sensor One, Y-Axis</option>
+			                                        <option value="2">Sensor Two, X-Axis</option>
+			                                        <option value="3">Sensor Two, Y-Axis</option>
+		                                        </select>
+	                                        </div>
                                     </div><!-- .nk-block-between -->
                                 </div><!-- .nk-block-head -->
 
@@ -34,8 +44,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="mean"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="mean">
+                                                        <canvas class="sales-overview-chart" id="mean-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="mean-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="mean-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="mean-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -52,8 +65,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="crest"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="crest">
+                                                        <canvas class="sales-overview-chart" id="crest-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="crest-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="crest-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="crest-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -69,8 +85,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="std"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="std">
+                                                        <canvas class="sales-overview-chart" id="std-1" ></canvas>
+                                                        <canvas class="sales-overview-chart" id="std-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="std-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="std-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -87,8 +106,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="clear"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="clear">
+                                                        <canvas class="sales-overview-chart" id="clear-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="clear-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="clear-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="clear-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -105,8 +127,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="kur"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="kur">
+                                                        <canvas class="sales-overview-chart" id="kur-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="kur-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="kur-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="kur-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -123,8 +148,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="skew"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="skew">
+                                                        <canvas class="sales-overview-chart" id="skew-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="skew-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="skew-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="skew-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -141,8 +169,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="impulse"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="impulse">
+                                                        <canvas class="sales-overview-chart" id="impulse-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="impulse-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="impulse-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="impulse-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -159,8 +190,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="nk-sales-ck large pt-4">
-                                                        <canvas class="sales-overview-chart" id="shape"></canvas>
+                                                    <div class="nk-sales-ck large pt-4" id="shape">
+                                                        <canvas class="sales-overview-chart" id="shape-1"></canvas>
+                                                        <canvas class="sales-overview-chart" id="shape-2" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="shape-3" style="display: none"></canvas>
+                                                        <canvas class="sales-overview-chart" id="shape-4" style="display: none"></canvas>
                                                     </div>
                                                 </div>
                                             </div><!-- .card -->
@@ -176,8 +210,10 @@
                         </div>
                     </div>
                 </div>
-	{{ features_x|json_script:'features_x' }}
-	{{ features_y|json_script:'features_y' }}
+	{{ features_one_x|json_script:'features_one_x' }}
+	{{ features_one_y|json_script:'features_one_y' }}
+	{{ features_two_x|json_script:'features_two_x' }}
+	{{ features_two_y|json_script:'features_two_y' }}
 {% endblock %}
 {% block script %}
 	<script src="{% static './js/time_features.js' %}"></script>
