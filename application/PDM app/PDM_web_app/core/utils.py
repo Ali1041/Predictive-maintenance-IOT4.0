@@ -12,9 +12,9 @@ from scipy.fft import fft, fftfreq
 def fetch_data(previous_pk, latest_pk):
 
     sensor_one = SensorOneData.objects.filter(Q(id__gte=previous_pk),Q(id__lte=latest_pk)).values('x_axis', 'y_axis',
-                                                                                          'created_at')
+                                                                                          'created_at').order_by('pk')
     sensor_two = SensorTwoData.objects.filter(Q(id__gte=previous_pk),Q(id__lte=latest_pk)).values(
-        'x_axis', 'y_axis', 'created_at')
+        'x_axis', 'y_axis', 'created_at').order_by('pk')
     return sensor_one, sensor_two
 
 def get_features( previous_pk, latest_pk):

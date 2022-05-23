@@ -57,9 +57,7 @@ fetch('http://127.0.0.1:8000/fft-api/')
                     }
                 },
                 scales: {
-                    y: {
-                        max:1
-                    },
+
                     x:{
                         min:0,
                         max:10000,

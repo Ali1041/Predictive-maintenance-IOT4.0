@@ -10,7 +10,7 @@ import os
 from .models import SensorOneData, SensorTwoData, FeaturesObtained
 from .utils import fetch_data, make_features, get_features, get_fft, get_envelope
 import pickle
-from sklearn.preprocessing import StandardScaler
+from django.db.models import Q
 
 # Create your views here.
 
@@ -25,50 +25,33 @@ def get_pi_data(request):
 
 def load_data(request):
     # 2004.02.12.10.32.39
-    url = settings.STATIC_ROOT + '/2nd_test/2004.02.12.10.32.39'
-
-    dataset = pd.read_csv(url, sep='\t')
-    dataset.columns = ['B1x', 'B1y', 'B2x', 'B2y']
-    sensor_one_x = list(dataset['B1x'])
-    sensor_one_y = list(dataset['B1y'])
-    sensor_two_x = list(dataset['B2x'])
-    sensor_two_y = list(dataset['B2y'])
-    sensor_one = []
-    sensor_two = []
-    for index, item in enumerate(sensor_one_x):
-        sensor_one.append(SensorOneData(x_axis=item, y_axis=sensor_one_y[index]))
-        sensor_two.append(SensorTwoData(x_axis=sensor_two_x[index], y_axis=sensor_two_y[index]))
-
-    request.session['feature_previous_pk'] = FeaturesObtained.objects.latest('pk').pk if FeaturesObtained.objects.all().exists() else 1
-
-    sensor_one_x_array = np.array(sensor_one_x)
-    make_features(sensor_one_x_array, 'S1B1', 'x')
-
-    sensor_one_y_array = np.array(sensor_one_y)
-    make_features(sensor_one_y_array, 'S1B2', 'y')
-
-    sensor_two_x_array = np.array(sensor_two_x)
-    make_features(sensor_two_x_array, 'S2B1', 'x')
-
-    sensor_two_y_array = np.array(sensor_two_y)
-    make_features(sensor_two_y_array, 'S2B2', 'y')
-    request.session['features_current_pk'] = FeaturesObtained.objects.latest('pk').pk
-
-    request.session['previous_pk'] = SensorOneData.objects.latest('pk').pk if SensorOneData.objects.all().exists() else 1
-    SensorOneData.objects.bulk_create(sensor_one)
-    SensorTwoData.objects.bulk_create(sensor_two)
-    request.session['current_pk'] = SensorOneData.objects.latest('pk').pk
+    # 2004.02.19.06.22.39
+    url = settings.STATIC_ROOT + '/2nd_test/2004.02.19.06.22.39'
 
     directory_path = settings.STATIC_ROOT+'/bleh'
-    c= 0
     for file in os.listdir(directory_path):
-        c+=1
         file_data = pd.read_csv(os.path.join(directory_path, file), sep='\t')
         file_data.columns = ['B1x', 'B1y', 'B2x', 'B2y']
         B1x = list(file_data['B1x'])
         B1y = list(file_data['B1y'])
         B2x = list(file_data['B2x'])
         B2y = list(file_data['B2y'])
+        sensor_one = []
+        sensor_two = []
+        for index, item in enumerate(B1x):
+            sensor_one.append(SensorOneData(x_axis=item, y_axis=B1y[index]))
+            sensor_two.append(SensorTwoData(x_axis=B2x[index], y_axis=B2y[index]))
+
+        request.session['previous_pk'] = SensorOneData.objects.latest(
+            'pk').pk if SensorOneData.objects.all().exists() else 1
+
+        SensorOneData.objects.bulk_create(sensor_one)
+        SensorTwoData.objects.bulk_create(sensor_two)
+        request.session['current_pk'] = SensorOneData.objects.latest('pk').pk
+
+        request.session['feature_previous_pk'] = FeaturesObtained.objects.latest(
+            'pk').pk if FeaturesObtained.objects.all().exists() else 1
+
         B1x_array = np.array(B1x)
         make_features(B1x_array, 'S1B1', 'x')
 
@@ -80,7 +63,8 @@ def load_data(request):
 
         B2y_array = np.array(B2y)
         make_features(B2y_array, 'S2B2', 'y')
-    print(c)
+        request.session['features_current_pk'] = FeaturesObtained.objects.latest('pk').pk
+
     return render(request, 'core/index.html')
 
 
@@ -149,13 +133,27 @@ def bearing_history(request):
     context = {}
     latest_pk = request.session['current_pk']
     previous_pk = request.session['previous_pk']
-    sensor_one, sensor_two = fetch_data(previous_pk, latest_pk)
     feature_latest_pk = request.session['features_current_pk']
     feature_previous_pk = request.session['feature_previous_pk']
-    features = get_features(feature_previous_pk, feature_latest_pk)
+    sensor_one = sensor_two = ''
+    if 'q' in request.GET.keys():
+        parts = latest_pk / 4
+        print(parts)
+        mapping = {'14:00':[0, parts], '15:00':[parts,parts*2],'16:00':[parts*2,parts*3],'17:00':[parts*3,parts*4]}
+        print(request.GET, mapping[f'{request.GET["q"]}'])
+        points = mapping[f'{request.GET["q"]}']
+        sensor_one = SensorOneData.objects.filter(Q(pk__gte=points[0]), Q(pk__lte=points[1])).values('x_axis', 'y_axis',
+                                                                                          'created_at').order_by('pk')
+        sensor_two = SensorTwoData.objects.filter(Q(pk__gte=points[0]), Q(pk__lte=points[1])).values('x_axis', 'y_axis',
+                                                                                          'created_at').order_by('pk')
+    else:
+        sensor_one, sensor_two = fetch_data(previous_pk, latest_pk)
+
+        features = get_features(feature_previous_pk, feature_latest_pk)
     context['sensor_one'] = list(sensor_one)
     context['sensor_two'] = list(sensor_two)
     context['features'] = features
+    context['is_files'] = True
     return render(request, 'core/bearing_history.html', context)
 
 

@@ -28,6 +28,28 @@
                                         <span class="nk-menu-text">Technical Details</span>
 
                                     </a>
+	                                {% if is_files %}
+	                                <a href="{% url 'core:bearing-history' %} " class="nk-menu-link"
+                                     >
+                                        <span class="nk-menu-text ml-3">25-05-2022 14:00:00</span>
+
+                                    </a>
+		                                <a href="{% url 'core:bearing-history' %} " class="nk-menu-link"
+                                     >
+                                        <span class="nk-menu-text ml-3">25-05-2022 15:00:00</span>
+
+                                    </a>
+		                                <a href="{% url 'core:bearing-history' %} " class="nk-menu-link"
+                                     >
+                                        <span class="nk-menu-text ml-3">25-05-2022 16:00:00</span>
+
+                                    </a>
+		                                <a href="/bearing-history/?q=17:00:00" class="nk-menu-link"
+                                     >
+                                        <span class="nk-menu-text ml-3">25-05-2022 17:00:00</span>
+
+                                    </a>
+	                                {% endif %}
                                 </li>
 	                            <li {% if 'time-features' in request.path %} class="nk-menu-item active current-page" {% else %} class="nk-menu-item" {% endif %} >
                                     <a href="{% url 'core:time-features' %} " class="nk-menu-link">

@@ -8,7 +8,9 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('load-data/', views.load_data, name='load-data'),
     path('instant-bearing-data/', views.instantaneous_bearing_data, name='instant-bearing-data'),
-    path('bearing-history', views.bearing_history, name='bearing-history'),
+    path('bearing-history/', views.bearing_history, name='bearing-history'),
+    # path('bearing-history/<int:num>/', views.bearing_history, name='bearing-history'),
+
     path('time-features', views.time_features, name='time-features'),
     path('fft-api/', views.fft_api, name="fft-api"),
     path('envelope-api/',views.envelope_spectrum, name='envelope-spectrum'),
